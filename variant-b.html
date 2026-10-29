@@ -1,0 +1,789 @@
+<!doctype html>
+<html lang="nb">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<style>*{box-sizing:border-box}body{margin:0}img,svg{max-width:100%}[hidden]{display:none!important}</style>
+<title>Eksempel Rør Fjord</title>
+<meta name="claude:viewport-fit-sides" content="cover">
+<link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Archivo:wdth,wght@62..125,500..900&family=Source+Sans+3:wght@400;500;600&display=swap">
+<style>
+/* Layout: sticky bar, one-column rhythm of bands; each band is a full-width tint with a centered wrapper.
+   Motif: a single pipe line (stroke + water dashes) that recurs in the hero art, service icons and process steps. */
+:root {
+  --bg: #F3F5F7;
+  --surface: #FFFFFF;
+  --surface-2: #E3E8EE;
+  --fg: #14202E;
+  --muted: #4B5B6B;
+  --line: #CBD3DC;
+  --primary: #1D3557;
+  --primary-fg: #FFFFFF;
+  --accent: #D0431B;
+  --accent-fg: #FFFFFF;
+  --water: #4F86B8;
+  --pipe: #A9B6C4;
+  --ribbon-bg: #14202E;
+  --ribbon-fg: #F3F5F7;
+  --focus: #1D3557;
+  --ph-bg: #FDE9E2;
+  --font-display: "Archivo", "Arial Narrow", Arial, sans-serif;
+  --font-body: "Source Sans 3", "Segoe UI", system-ui, sans-serif;
+}
+@media (prefers-color-scheme: dark) {
+  :root:not([data-theme="light"]) {
+    --bg: #0E1621;
+    --surface: #16212F;
+    --surface-2: #1D2B3C;
+    --fg: #E8EEF5;
+    --muted: #A3B2C3;
+    --line: #2A3B50;
+    --primary: #8DB6E6;
+    --primary-fg: #0B1623;
+    --accent: #FF7A4D;
+    --accent-fg: #1A0A04;
+    --water: #6FA3D6;
+    --pipe: #4A5F77;
+    --ribbon-bg: #1D2B3C;
+    --ribbon-fg: #E8EEF5;
+    --focus: #8DB6E6;
+    --ph-bg: #3A2418;
+    color-scheme: dark;
+}
+}
+:root[data-theme="dark"] {
+  --bg: #0E1621;
+  --surface: #16212F;
+  --surface-2: #1D2B3C;
+  --fg: #E8EEF5;
+  --muted: #A3B2C3;
+  --line: #2A3B50;
+  --primary: #8DB6E6;
+  --primary-fg: #0B1623;
+  --accent: #FF7A4D;
+  --accent-fg: #1A0A04;
+  --water: #6FA3D6;
+  --pipe: #4A5F77;
+  --ribbon-bg: #1D2B3C;
+  --ribbon-fg: #E8EEF5;
+  --focus: #8DB6E6;
+  --ph-bg: #3A2418;
+  color-scheme: dark;
+}
+
+* { box-sizing: border-box; }
+html { scroll-behavior: smooth; scroll-padding-top: 5rem; }
+body {
+  background: var(--bg);
+  color: var(--fg);
+  font-family: var(--font-body);
+  font-size: 1.0625rem;
+  line-height: 1.6;
+  margin: 0;
+}
+body::before {
+  content: "";
+  position: fixed;
+  inset: 0 0 auto;
+  height: env(safe-area-inset-top, 0px);
+  z-index: 10;
+  background: var(--bg);
+}
+h1, h2, h3 { font-family: var(--font-display); line-height: 1.1; margin: 0; text-wrap: balance; letter-spacing: -0.01em; }
+p { margin: 0; }
+a { color: var(--primary); }
+:focus-visible { outline: 3px solid var(--focus); outline-offset: 2px; }
+.skip { position: absolute; left: -9999px; top: 0; background: var(--accent); color: var(--accent-fg); padding: .6rem 1rem; z-index: 50; }
+.skip:focus { left: 1rem; top: 1rem; }
+
+.wrap {
+  max-width: 1120px;
+  margin: 0 auto;
+  padding-left: max(16px, env(safe-area-inset-left, 0px));
+  padding-right: max(16px, env(safe-area-inset-right, 0px));
+}
+.band { padding-block: clamp(3rem, 7vw, 5.5rem); }
+.band-alt { background: var(--surface-2); }
+.eyebrow { font-size: .8rem; font-weight: 600; letter-spacing: .12em; text-transform: uppercase; color: var(--primary); margin-bottom: .75rem; }
+.h2 { font-size: clamp(1.75rem, 4vw, 2.6rem); font-weight: 700; max-width: 22ch; }
+.lede { color: var(--muted); max-width: 60ch; margin-top: 1rem; }
+.sec-head { margin-bottom: clamp(1.75rem, 4vw, 2.75rem); }
+
+/* placeholders are marked so nobody mistakes them for real facts */
+.ph { background: var(--ph-bg); border-bottom: 1px dashed var(--accent); padding: 0 .2em; border-radius: 2px; color: inherit; }
+
+/* mock-up ribbon */
+.ribbon { background: var(--ribbon-bg); color: var(--ribbon-fg); font-size: .875rem; }
+.ribbon .wrap { padding-block: .55rem; display: flex; gap: .6rem; align-items: baseline; flex-wrap: wrap; }
+.ribbon a { color: var(--ribbon-fg); font-weight: 600; }
+.ribbon .variants { margin-left: auto; }
+.ribbon strong { letter-spacing: .1em; text-transform: uppercase; font-size: .75rem; background: var(--accent); color: var(--accent-fg); padding: .1rem .5rem; border-radius: 2px; }
+
+/* header */
+.site-head { position: sticky; top: env(safe-area-inset-top, 0px); z-index: 20; background: var(--bg); border-bottom: 1px solid var(--line); }
+.site-head .wrap { display: flex; align-items: center; gap: 1rem; min-height: 4rem; }
+.brand { display: flex; align-items: center; gap: .6rem; text-decoration: none; color: var(--fg); font-family: var(--font-display); font-weight: 700; font-size: 1.2rem; margin-right: auto; }
+.brand svg { width: 30px; height: 30px; }
+.nav { display: flex; gap: 1.5rem; align-items: center; }
+.nav a { color: var(--fg); text-decoration: none; font-weight: 500; font-size: .98rem; padding-block: .4rem; border-bottom: 2px solid transparent; }
+.nav a:hover { border-bottom-color: var(--accent); }
+.head-phone { font-weight: 600; white-space: nowrap; }
+.menu-btn { display: none; background: none; border: 1px solid var(--line); color: var(--fg); padding: .5rem .8rem; font: inherit; font-weight: 600; border-radius: 4px; cursor: pointer; }
+
+/* buttons */
+.btn { display: inline-flex; align-items: center; justify-content: center; gap: .5rem; padding: .85rem 1.4rem; font: inherit; font-weight: 600; text-decoration: none; border: 2px solid transparent; border-radius: 4px; cursor: pointer; transition: transform .2s ease, background-color .2s ease; }
+.btn-main { background: var(--accent); color: var(--accent-fg); }
+.btn-main:hover { transform: translateY(-2px); }
+.btn-line { border-color: var(--primary); color: var(--primary); background: transparent; }
+.btn-line:hover { background: var(--surface); }
+
+/* hero */
+.hero { padding-block: clamp(2.5rem, 6vw, 4.5rem); }
+.hero .wrap { display: grid; gap: 2.5rem; align-items: center; }
+.hero h1 { font-size: clamp(2.3rem, 6.2vw, 4.1rem); font-weight: 800; max-width: 14ch; }
+.hero .lede { font-size: 1.15rem; color: var(--muted); }
+.hero-cta { display: flex; gap: .8rem; flex-wrap: wrap; margin-top: 1.75rem; }
+.trust { list-style: none; margin: 2rem 0 0; padding: 0; display: grid; gap: .6rem; font-size: .98rem; }
+.trust li { display: flex; gap: .6rem; align-items: baseline; }
+.trust li::before { content: ""; flex: none; width: .7rem; height: .7rem; background: var(--water); border-radius: 50% 50% 50% 0; transform: rotate(-45deg); }
+.hero-art { width: 100%; max-width: 560px; height: auto; justify-self: center; }
+.pipe { stroke: var(--pipe); stroke-width: 16; fill: none; }
+.flow { stroke: var(--water); stroke-width: 5; fill: none; stroke-dasharray: 3 15; animation: flow 1.4s linear infinite; }
+.fl { fill: var(--pipe); }
+.valve { fill: var(--primary); }
+.stem { stroke: var(--primary); stroke-width: 5; }
+.wheel { fill: none; stroke: var(--accent); stroke-width: 6; }
+.drop { fill: var(--water); animation: drip 2.4s ease-in infinite; transform-box: fill-box; }
+@keyframes flow { to { stroke-dashoffset: -36; } }
+@keyframes drip {
+  0% { transform: translateY(0); opacity: 0; }
+  15% { opacity: 1; }
+  80% { transform: translateY(104px); opacity: 1; }
+  100% { transform: translateY(116px); opacity: 0; }
+}
+
+/* services */
+.grid { display: grid; gap: 1.25rem; }
+.grid-3 { grid-template-columns: repeat(auto-fit, minmax(min(100%, 280px), 1fr)); }
+.grid-team { grid-template-columns: repeat(auto-fit, minmax(min(100%, 230px), 1fr)); }
+.grid-proj { grid-template-columns: repeat(auto-fit, minmax(min(100%, 250px), 1fr)); }
+.svc { background: var(--surface); border: 1px solid var(--line); padding: 1.5rem; display: flex; flex-direction: column; gap: .6rem; transition: transform .25s ease, border-color .25s ease; }
+.svc:hover { transform: translateY(-3px); border-color: var(--primary); }
+.svc svg { width: 34px; height: 34px; color: var(--primary); fill: none; stroke: currentColor; stroke-width: 1.7; stroke-linecap: round; stroke-linejoin: round; }
+.svc h3 { font-size: 1.2rem; font-weight: 700; }
+.svc p { color: var(--muted); font-size: .98rem; }
+.note { font-size: .88rem; color: var(--muted); margin-top: 1.25rem; }
+
+/* team */
+.member { background: var(--surface); border: 1px solid var(--line); display: flex; flex-direction: column; }
+.member svg { width: 100%; height: auto; display: block; }
+.member-body { padding: 1.1rem 1.25rem 1.4rem; display: flex; flex-direction: column; gap: .3rem; }
+.member h3 { font-size: 1.15rem; font-weight: 700; }
+.role { font-size: .85rem; font-weight: 600; letter-spacing: .06em; text-transform: uppercase; color: var(--primary); }
+.member p { color: var(--muted); font-size: .96rem; margin-top: .35rem; }
+
+/* projects */
+.proj { margin: 0; background: var(--surface); border: 1px solid var(--line); overflow: hidden; }
+.proj svg { width: 100%; height: auto; display: block; transition: transform .5s ease; }
+.proj:hover svg { transform: scale(1.04); }
+.proj figcaption { padding: .95rem 1.1rem 1.15rem; font-size: .96rem; }
+.proj strong { display: block; font-family: var(--font-display); font-size: 1.05rem; margin-bottom: .15rem; }
+.proj span { color: var(--muted); font-size: .9rem; }
+.svg-line { fill: none; stroke: var(--primary); stroke-width: 3; stroke-linecap: round; stroke-linejoin: round; }
+.svg-fill { fill: var(--surface); stroke: var(--primary); stroke-width: 3; stroke-linejoin: round; }
+.svg-bg { fill: var(--surface-2); }
+.svg-pipe { fill: none; stroke: var(--pipe); stroke-width: 8; stroke-linecap: round; stroke-linejoin: round; }
+.svg-hot { fill: none; stroke: var(--accent); stroke-width: 7; stroke-linecap: round; stroke-linejoin: round; }
+.svg-water { fill: none; stroke: var(--water); stroke-width: 3; stroke-linecap: round; }
+.svg-solid { fill: var(--primary); }
+.svg-accent { fill: var(--accent); }
+
+/* process: the order is real, so the steps are numbered and joined by a pipe */
+.steps { list-style: none; margin: 0; padding: 0; display: grid; gap: 1.5rem; grid-template-columns: repeat(auto-fit, minmax(min(100%, 220px), 1fr)); counter-reset: step; }
+.steps li { counter-increment: step; position: relative; padding-top: 3.2rem; }
+.steps li::before { content: counter(step); position: absolute; top: 0; left: 0; width: 2.4rem; height: 2.4rem; display: grid; place-items: center; background: var(--primary); color: var(--primary-fg); font-family: var(--font-display); font-weight: 700; border-radius: 50%; z-index: 1; }
+.steps li::after { content: ""; position: absolute; top: 1.05rem; left: 2.4rem; right: -1.5rem; height: 5px; background: repeating-linear-gradient(90deg, var(--water) 0 6px, transparent 6px 12px); }
+.steps li:last-child::after { display: none; }
+.steps h3 { font-size: 1.15rem; font-weight: 700; margin-bottom: .35rem; }
+.steps p { color: var(--muted); font-size: .98rem; }
+
+/* reviews */
+.reviews { background: var(--surface); border: 1px dashed var(--pipe); padding: 1.75rem; display: grid; gap: .6rem; max-width: 62ch; }
+.reviews h3 { font-size: 1.2rem; font-weight: 700; }
+.reviews p { color: var(--muted); }
+
+/* faq */
+.faq { display: grid; gap: .75rem; max-width: 760px; }
+.faq details { background: var(--surface); border: 1px solid var(--line); }
+.faq summary { cursor: pointer; padding: 1rem 1.25rem; font-weight: 600; list-style: none; display: flex; justify-content: space-between; gap: 1rem; }
+.faq summary::-webkit-details-marker { display: none; }
+.faq summary::after { content: "+"; font-size: 1.4rem; line-height: 1; color: var(--primary); transition: transform .25s ease; }
+.faq details[open] summary::after { transform: rotate(45deg); }
+.faq .ans { padding: 0 1.25rem 1.1rem; color: var(--muted); }
+
+/* contact */
+.contact { display: grid; gap: 2.5rem; }
+.info { display: grid; gap: 1.1rem; align-content: start; }
+.info dt { font-size: .8rem; font-weight: 600; letter-spacing: .1em; text-transform: uppercase; color: var(--primary); }
+.info dd { margin: .15rem 0 0; }
+.info dl { margin: 0; display: grid; gap: 1.1rem; }
+form.card { background: var(--surface); border: 1px solid var(--line); padding: 1.5rem; display: grid; gap: 1rem; }
+.field { display: grid; gap: .35rem; }
+.field label { font-weight: 600; font-size: .95rem; }
+.field input, .field textarea { font: inherit; color: var(--fg); background: var(--bg); border: 1px solid var(--pipe); border-radius: 4px; padding: .7rem .8rem; width: 100%; }
+.field textarea { min-height: 7.5rem; resize: vertical; }
+.consent { display: flex; gap: .65rem; align-items: flex-start; font-size: .92rem; color: var(--muted); }
+.consent input { margin-top: .3rem; width: 1.1rem; height: 1.1rem; flex: none; }
+.form-status { padding: .85rem 1rem; background: var(--surface-2); border-left: 4px solid var(--water); font-size: .95rem; }
+.linkbtn { background: none; border: 0; padding: 0; font: inherit; color: var(--primary); text-decoration: underline; cursor: pointer; }
+
+/* footer */
+.foot { background: var(--ribbon-bg); color: var(--ribbon-fg); padding-block: 2.25rem; font-size: .95rem; }
+.foot .wrap { display: flex; flex-wrap: wrap; gap: 1rem 2rem; justify-content: space-between; align-items: baseline; }
+.foot .linkbtn, .foot a { color: var(--ribbon-fg); }
+.foot-links { display: flex; gap: 1.25rem; flex-wrap: wrap; }
+
+/* dialogs */
+dialog { border: 1px solid var(--line); background: var(--surface); color: var(--fg); padding: 0; border-radius: 6px; width: min(720px, calc(100% - 32px)); max-height: 85vh; overflow: auto; }
+dialog::backdrop { background: rgba(5, 18, 25, .6); }
+.dlg-head { position: sticky; top: 0; background: var(--surface); border-bottom: 1px solid var(--line); display: flex; justify-content: space-between; align-items: center; gap: 1rem; padding: 1rem 1.4rem; }
+.dlg-head h2 { font-size: 1.35rem; }
+.dlg-body { padding: 1.25rem 1.4rem 1.75rem; display: grid; gap: 1rem; font-size: 1rem; }
+.dlg-body h3 { font-size: 1.05rem; margin-top: .5rem; }
+.dlg-body ul { margin: 0; padding-left: 1.2rem; display: grid; gap: .3rem; }
+.dlg-warn { background: var(--ph-bg); border-left: 4px solid var(--accent); padding: .8rem 1rem; font-size: .93rem; }
+
+/* cookie bar */
+.cookie { position: fixed; left: 0; right: 0; bottom: 0; z-index: 30; padding-bottom: env(safe-area-inset-bottom, 0px); background: var(--surface); border-top: 2px solid var(--accent); box-shadow: 0 -8px 24px rgba(5, 18, 25, .18); }
+.cookie .wrap { padding-block: 1rem; display: grid; gap: .8rem; }
+.cookie p { font-size: .95rem; max-width: 70ch; }
+.cookie label { display: inline-flex; gap: .5rem; align-items: center; font-size: .92rem; }
+.cookie-actions { display: flex; gap: .6rem; flex-wrap: wrap; align-items: center; }
+.cookie .btn { padding: .6rem 1.1rem; }
+
+/* scroll reveal: starts visible, only content below the fold is staged */
+.pre { opacity: 0; transform: translateY(14px); }
+.pre.in { opacity: 1; transform: none; transition: opacity .6s ease, transform .6s ease; transition-delay: var(--d, 0s); }
+
+@media (min-width: 880px) {
+  .hero .wrap { grid-template-columns: 1.05fr .95fr; }
+  .contact { grid-template-columns: .85fr 1.15fr; }
+}
+@media (max-width: 879px) {
+  .menu-btn { display: inline-block; }
+  .nav { display: none; position: absolute; top: 100%; left: 0; right: 0; flex-direction: column; align-items: flex-start; gap: 0; background: var(--bg); border-bottom: 1px solid var(--line); padding: .5rem max(16px, env(safe-area-inset-right, 0px)) 1rem max(16px, env(safe-area-inset-left, 0px)); }
+  .nav.open { display: flex; }
+  .nav a { padding-block: .7rem; width: 100%; }
+  .head-phone { display: none; }
+  .steps li::after { display: none; }
+}
+@media (prefers-reduced-motion: reduce) {
+  html { scroll-behavior: auto; }
+  .flow, .drop { animation: none; }
+  .drop { opacity: 1; }
+  .pre { opacity: 1; transform: none; }
+  .svc, .btn, .proj svg { transition: none; }
+}
+
+/* variant B overrides */
+h1, h2, h3 { font-stretch: 112%; }
+.hero h1 { text-transform: uppercase; font-weight: 900; font-size: clamp(2.05rem, 5.4vw, 3.5rem); max-width: 16ch; letter-spacing: 0; }
+.h2 { text-transform: uppercase; font-weight: 800; font-size: clamp(1.6rem, 3.6vw, 2.3rem); max-width: 24ch; }
+.eyebrow { color: var(--accent); }
+.btn, .svc, .member, .proj, form.card, .faq details, .reviews, dialog, .field input, .field textarea, .menu-btn { border-radius: 0; }
+.btn-main { color: var(--accent-fg); }
+.svc { background: transparent; border: 0; border-top: 4px solid var(--primary); padding: 1.25rem 0 0; }
+.svc:hover { transform: none; border-top-color: var(--accent); }
+.svc svg { color: var(--accent); }
+.band-alt { background: var(--surface-2); }
+.steps li::before { border-radius: 0; background: var(--accent); color: var(--accent-fg); }
+.pipe { stroke-dasharray: 1400; stroke-dashoffset: 1400; animation: draw 2.2s ease-out .2s forwards; }
+.flow { opacity: 0; animation: flow 1.4s linear infinite, fadein .6s ease 2s forwards; }
+.drop { animation-delay: 2.2s; }
+@keyframes draw { to { stroke-dashoffset: 0; } }
+@keyframes fadein { to { opacity: 1; } }
+.pre { transform: translateX(-24px); }
+.proj:hover svg { transform: scale(1.02); }
+@media (prefers-reduced-motion: reduce) {
+  .pipe { animation: none; stroke-dashoffset: 0; }
+  .flow { animation: none; opacity: 1; }
+}
+
+</style>
+</head>
+<body>
+<a class="skip" href="#innhold">Hopp til innholdet</a>
+
+<div class="ribbon">
+  <div class="wrap">
+    <strong>Mal B</strong>
+    <span>Dette er et konseptutkast. «Eksempel Rør AS» finnes ikke, og navn, personer og tekster er plassholdere som skal byttes ut.</span>
+    <span class="variants">Varianter: <a href="variant-a.html" target="_blank" rel="noopener">A</a> · <strong style="background:none;color:inherit;padding:0">B</strong> · <a href="variant-c.html" target="_blank" rel="noopener">C</a></span>
+  </div>
+</div>
+
+<header class="site-head">
+  <div class="wrap">
+    <a class="brand" href="#top" aria-label="Eksempel Rør, til toppen">
+      <svg viewBox="0 0 32 32" aria-hidden="true"><path d="M16 3 C16 3 6 14 6 20 a10 10 0 0 0 20 0 C26 14 16 3 16 3z" fill="var(--primary)"/><path d="M11 21 H21" stroke="var(--accent)" stroke-width="3" stroke-linecap="round"/></svg>
+      Eksempel Rør
+    </a>
+    <nav class="nav" id="nav" aria-label="Hovedmeny">
+      <a href="#tjenester">Tjenester</a>
+      <a href="#team">Team</a>
+      <a href="#prosjekter">Prosjekter</a>
+      <a href="#slik">Slik jobber vi</a>
+      <a href="#kontakt">Kontakt</a>
+    </nav>
+    <span class="head-phone">Tlf. <span class="ph">[00 00 00 00]</span></span>
+    <button class="menu-btn" id="menuBtn" type="button" aria-expanded="false" aria-controls="nav">Meny</button>
+  </div>
+</header>
+
+<main id="innhold">
+<span id="top"></span>
+
+<section class="hero">
+  <div class="wrap">
+    <div>
+      <p class="eyebrow">Rørlegger i <span class="ph">[Sted]</span> og omegn</p>
+      <h1>Lekkasje, nytt bad eller ny bereder? Vi tar oss av rørene.</h1>
+      <p class="lede" style="margin-top:1.1rem">Vi hjelper privatkunder og bedrifter med alt fra små reparasjoner til hele våtrom. Du får en fast kontaktperson, en tydelig pris og beskjed om når vi kommer.</p>
+      <div class="hero-cta">
+        <a class="btn btn-main" href="#kontakt">Be om tilbud</a>
+        <a class="btn btn-line" href="#tjenester">Se tjenester</a>
+      </div>
+      <ul class="trust">
+        <li><span><span class="ph">[Mesterbrev / sentral godkjenning]</span></span></li>
+        <li><span>Svar innen <span class="ph">[én]</span> arbeidsdag</span></li>
+        <li><span>Pris avtales før arbeidet starter</span></li>
+      </ul>
+    </div>
+    <svg class="hero-art" viewBox="0 0 520 400" role="img" aria-label="Illustrasjon av rør, en ventil og en vanndråpe som faller fra en kran">
+      <path class="pipe" d="M0 110 H150 Q190 110 190 150 V270 Q190 310 230 310 H520"/>
+      <path class="pipe" d="M370 310 V190 Q370 160 400 160 H450 V180"/>
+      <path class="flow" d="M0 110 H150 Q190 110 190 150 V270 Q190 310 230 310 H520"/>
+      <path class="flow" d="M370 310 V190 Q370 160 400 160 H450 V180"/>
+      <rect class="fl" x="174" y="196" width="32" height="10" rx="2"/>
+      <rect class="fl" x="174" y="262" width="32" height="10" rx="2"/>
+      <rect class="valve" x="174" y="212" width="32" height="46" rx="6"/>
+      <line class="stem" x1="190" y1="212" x2="190" y2="186"/>
+      <ellipse class="wheel" cx="190" cy="180" rx="26" ry="8"/>
+      <rect class="fl" x="440" y="176" width="20" height="14" rx="3"/>
+      <path class="drop" d="M450 196 q-8 14 0 22 q8 -8 0 -22z"/>
+      <rect class="fl" x="354" y="300" width="32" height="10" rx="2"/>
+    </svg>
+  </div>
+</section>
+
+<section class="band band-alt" id="tjenester">
+  <div class="wrap">
+    <div class="sec-head" data-reveal>
+      <p class="eyebrow">Tjenester</p>
+      <h2 class="h2">Det vi gjør for deg</h2>
+      <p class="lede">Hver tjeneste kan tilpasses det firmaet faktisk tilbyr. Listen under er et utgangspunkt.</p>
+    </div>
+    <div class="grid grid-3">
+      <article class="svc" data-reveal style="--d:0s">
+        <svg viewBox="0 0 24 24" aria-hidden="true"><path d="M12 3 C12 3 5.5 10 5.5 14.5 a6.5 6.5 0 0 0 13 0 C18.5 10 12 3 12 3z"/><path d="M9.5 15 a2.6 2.6 0 0 0 2.5 2.5"/></svg>
+        <h3>Service og lekkasjer</h3>
+        <p>Drypper det, lukter det eller går det trått i avløpet? Vi finner feilen og reparerer den.</p>
+      </article>
+      <article class="svc" data-reveal style="--d:.06s">
+        <svg viewBox="0 0 24 24" aria-hidden="true"><path d="M3 12 h18 v2 a4 4 0 0 1 -4 4 H7 a4 4 0 0 1 -4 -4 z"/><path d="M6 12 V6 a2 2 0 0 1 4 0"/><path d="M7 18 l-1 2 M17 18 l1 2"/></svg>
+        <h3>Bad og våtrom</h3>
+        <p>Fra ny kran og dusj til komplett rehabilitering. Vi samarbeider gjerne med elektriker og flislegger.</p>
+      </article>
+      <article class="svc" data-reveal style="--d:.12s">
+        <svg viewBox="0 0 24 24" aria-hidden="true"><rect x="7" y="4" width="10" height="16" rx="3"/><path d="M10 3 V1.5 M14 3 V1.5 M9.5 9 h5 M12 20 v2"/></svg>
+        <h3>Varmtvannsbereder</h3>
+        <p>Bytte, nyinstallasjon og feilsøking. Vi hjelper deg å velge riktig størrelse.</p>
+      </article>
+      <article class="svc" data-reveal style="--d:0s">
+        <svg viewBox="0 0 24 24" aria-hidden="true"><rect x="3" y="5" width="18" height="14" rx="2"/><circle cx="12" cy="12" r="4"/><path d="M12 8 v8 M8 12 h8"/></svg>
+        <h3>Varmepumpe og vannbåren varme</h3>
+        <p>Montering og service på varmeløsninger som gir lavere strømregning og jevn varme.</p>
+      </article>
+      <article class="svc" data-reveal style="--d:.06s">
+        <svg viewBox="0 0 24 24" aria-hidden="true"><path d="M3 11 12 4 l9 7"/><path d="M5 10 v10 h14 V10"/><path d="M10 20 v-6 h4 v6"/></svg>
+        <h3>Nybygg og rehabilitering</h3>
+        <p>Sanitæranlegg til nye hus og oppgradering av gamle rør i eksisterende bolig.</p>
+      </article>
+      <article class="svc" data-reveal style="--d:.12s">
+        <svg viewBox="0 0 24 24" aria-hidden="true"><circle cx="12" cy="13" r="8"/><path d="M12 8 v5 l3 2 M9 2 h6"/></svg>
+        <h3>Akutt hjelp</h3>
+        <p>Vannlekkasje og tette rør kan ikke vente. Vakttelefon: <span class="ph">[00 00 00 00]</span>.</p>
+      </article>
+    </div>
+  </div>
+</section>
+
+<section class="band" id="team">
+  <div class="wrap">
+    <div class="sec-head" data-reveal>
+      <p class="eyebrow">Team</p>
+      <h2 class="h2">Folkene som kommer hjem til deg</h2>
+      <p class="lede">Plassholdere. Bytt ut med ekte navn, roller og portrettbilder når firmaet har godkjent det.</p>
+    </div>
+    <div class="grid grid-team">
+      <article class="member" data-reveal style="--d:0s">
+        <svg viewBox="0 0 240 200" role="img" aria-label="Plassholder for portrettbilde">
+          <rect width="240" height="200" fill="var(--surface-2)"/>
+          <circle cx="120" cy="82" r="34" fill="var(--pipe)"/>
+          <path d="M44 200 a76 66 0 0 1 152 0z" fill="var(--primary)"/>
+          <rect x="88" y="48" width="64" height="12" rx="6" fill="var(--accent)"/>
+        </svg>
+        <div class="member-body">
+          <span class="role">Rørleggermester</span>
+          <h3><span class="ph">[Fornavn Etternavn]</span></h3>
+          <p><span class="ph">[Kort presentasjon: erfaring, hva vedkommende liker best å jobbe med.]</span></p>
+        </div>
+      </article>
+      <article class="member" data-reveal style="--d:.08s">
+        <svg viewBox="0 0 240 200" role="img" aria-label="Plassholder for portrettbilde">
+          <rect width="240" height="200" fill="var(--surface-2)"/>
+          <circle cx="120" cy="82" r="34" fill="var(--pipe)"/>
+          <path d="M44 200 a76 66 0 0 1 152 0z" fill="var(--water)"/>
+          <rect x="88" y="48" width="64" height="12" rx="6" fill="var(--primary)"/>
+        </svg>
+        <div class="member-body">
+          <span class="role">Rørlegger</span>
+          <h3><span class="ph">[Fornavn Etternavn]</span></h3>
+          <p><span class="ph">[Kort presentasjon.]</span></p>
+        </div>
+      </article>
+      <article class="member" data-reveal style="--d:.16s">
+        <svg viewBox="0 0 240 200" role="img" aria-label="Plassholder for portrettbilde">
+          <rect width="240" height="200" fill="var(--surface-2)"/>
+          <circle cx="120" cy="82" r="34" fill="var(--pipe)"/>
+          <path d="M44 200 a76 66 0 0 1 152 0z" fill="var(--accent)"/>
+          <rect x="88" y="48" width="64" height="12" rx="6" fill="var(--fg)"/>
+        </svg>
+        <div class="member-body">
+          <span class="role">Kontor og kundekontakt</span>
+          <h3><span class="ph">[Fornavn Etternavn]</span></h3>
+          <p><span class="ph">[Kort presentasjon.]</span></p>
+        </div>
+      </article>
+    </div>
+  </div>
+</section>
+
+<section class="band band-alt" id="prosjekter">
+  <div class="wrap">
+    <div class="sec-head" data-reveal>
+      <p class="eyebrow">Prosjekter</p>
+      <h2 class="h2">Utvalgte jobber</h2>
+      <p class="lede">Tegningene er illustrasjoner. Bytt dem med egne bilder fra ferdige jobber, med kundens samtykke.</p>
+    </div>
+    <div class="grid grid-proj">
+      <figure class="proj" data-reveal style="--d:0s">
+        <svg viewBox="0 0 320 240" role="img" aria-label="Illustrasjon av et bad med badekar og dusj">
+          <rect class="svg-bg" width="320" height="240"/>
+          <path class="svg-pipe" d="M80 150 V74 Q80 48 106 48 H140"/>
+          <path class="svg-solid" d="M128 46 h44 l-10 24 h-24 z"/>
+          <path class="svg-water" d="M138 82 v14 M150 82 v24 M162 82 v14"/>
+          <path class="svg-fill" d="M46 150 H274 V168 Q274 198 244 198 H76 Q46 198 46 168 Z"/>
+        </svg>
+        <figcaption><strong>Totalrenovering av bad</strong><span class="ph">[Sted, år] · Eksempel</span></figcaption>
+      </figure>
+      <figure class="proj" data-reveal style="--d:.07s">
+        <svg viewBox="0 0 320 240" role="img" aria-label="Illustrasjon av en varmtvannsbereder med rør">
+          <rect class="svg-bg" width="320" height="240"/>
+          <path class="svg-pipe" d="M138 40 V18 M182 40 V18"/>
+          <rect class="svg-fill" x="108" y="40" width="104" height="160" rx="32"/>
+          <circle class="svg-accent" cx="160" cy="92" r="14"/>
+          <path class="svg-line" d="M160 92 l7 -7"/>
+          <path class="svg-line" d="M130 138 H190 M130 158 H190"/>
+        </svg>
+        <figcaption><strong>Ny varmtvannsbereder</strong><span class="ph">[Sted, år] · Eksempel</span></figcaption>
+      </figure>
+      <figure class="proj" data-reveal style="--d:.14s">
+        <svg viewBox="0 0 320 240" role="img" aria-label="Illustrasjon av vannbåren gulvvarme som slynger seg i gulvet">
+          <rect class="svg-bg" width="320" height="240"/>
+          <rect class="svg-fill" x="32" y="32" width="256" height="176" rx="6"/>
+          <path class="svg-hot" d="M56 60 H264 V96 H56 V132 H264 V168 H56"/>
+        </svg>
+        <figcaption><strong>Vannbåren gulvvarme</strong><span class="ph">[Sted, år] · Eksempel</span></figcaption>
+      </figure>
+      <figure class="proj" data-reveal style="--d:.21s">
+        <svg viewBox="0 0 320 240" role="img" aria-label="Illustrasjon av en kjøkkenvask med kran">
+          <rect class="svg-bg" width="320" height="240"/>
+          <path class="svg-pipe" d="M200 140 V72 Q200 46 174 46 H146"/>
+          <path class="svg-water" d="M146 56 v22"/>
+          <path class="svg-fill" d="M70 140 H250 V168 Q250 196 222 196 H98 Q70 196 70 168 Z"/>
+          <rect class="svg-solid" x="40" y="132" width="240" height="10" rx="3"/>
+        </svg>
+        <figcaption><strong>Kjøkkenvask og tilkobling</strong><span class="ph">[Sted, år] · Eksempel</span></figcaption>
+      </figure>
+    </div>
+  </div>
+</section>
+
+<section class="band" id="slik">
+  <div class="wrap">
+    <div class="sec-head" data-reveal>
+      <p class="eyebrow">Slik jobber vi</p>
+      <h2 class="h2">Fra første samtale til ferdig jobb</h2>
+    </div>
+    <ol class="steps">
+      <li data-reveal style="--d:0s">
+        <h3>Du tar kontakt</h3>
+        <p>Ring eller send skjemaet. Fortell kort hva det gjelder, gjerne med bilder.</p>
+      </li>
+      <li data-reveal style="--d:.08s">
+        <h3>Befaring</h3>
+        <p>Ved behov kommer vi og ser på jobben, slik at tilbudet bygger på fakta.</p>
+      </li>
+      <li data-reveal style="--d:.16s">
+        <h3>Tilbud</h3>
+        <p>Du får pris og tidsplan skriftlig før noe starter.</p>
+      </li>
+      <li data-reveal style="--d:.24s">
+        <h3>Utførelse og oppfølging</h3>
+        <p>Vi rydder etter oss og står for arbeidet også etter at vi har dratt.</p>
+      </li>
+    </ol>
+  </div>
+</section>
+
+<section class="band band-alt" id="omtaler">
+  <div class="wrap">
+    <div class="sec-head" data-reveal>
+      <p class="eyebrow">Omtaler</p>
+      <h2 class="h2">Hva kundene sier</h2>
+    </div>
+    <div class="reviews" data-reveal>
+      <h3>Ekte omtaler vises her</h3>
+      <p>Maler skal ikke inneholde oppdiktede sitater. Når firmaet har godkjent det, kan omtaler fra for eksempel Google vises her, med kundens navn eller initialer og dato.</p>
+    </div>
+  </div>
+</section>
+
+<section class="band" id="sporsmal">
+  <div class="wrap">
+    <div class="sec-head" data-reveal>
+      <p class="eyebrow">Spørsmål og svar</p>
+      <h2 class="h2">Det folk spør om</h2>
+    </div>
+    <div class="faq" data-reveal>
+      <details>
+        <summary>Hva koster det å få besøk av rørlegger?</summary>
+        <div class="ans">Prisen avhenger av jobben. Vi oppgir pris før vi starter, enten som fast pris eller med timepris <span class="ph">[kr per time]</span> og anslag på tid.</div>
+      </details>
+      <details>
+        <summary>Kan dere komme akutt?</summary>
+        <div class="ans"><span class="ph">[Beskriv vaktordning og responstid her.]</span></div>
+      </details>
+      <details>
+        <summary>Hvilket område dekker dere?</summary>
+        <div class="ans">Vi jobber i <span class="ph">[Sted]</span> og omegn. Ta kontakt hvis du er usikker på om vi kommer til deg.</div>
+      </details>
+      <details>
+        <summary>Hva skjer med opplysningene jeg sender inn?</summary>
+        <div class="ans">Vi bruker dem bare til å svare deg og lage tilbud. Les mer i <button class="linkbtn" type="button" data-open="dlgPrivacy">personvernerklæringen</button>.</div>
+      </details>
+    </div>
+  </div>
+</section>
+
+<section class="band band-alt" id="kontakt">
+  <div class="wrap contact">
+    <div class="info" data-reveal>
+      <div>
+        <p class="eyebrow">Kontakt</p>
+        <h2 class="h2">Be om tilbud</h2>
+        <p class="lede">Beskriv jobben, så tar vi kontakt innen <span class="ph">[én]</span> arbeidsdag.</p>
+      </div>
+      <dl>
+        <div><dt>Telefon</dt><dd><span class="ph">[00 00 00 00]</span></dd></div>
+        <div><dt>E-post</dt><dd><span class="ph">[navn@firma.no]</span></dd></div>
+        <div><dt>Adresse</dt><dd><span class="ph">[Gate 1, 0000 Sted]</span></dd></div>
+        <div><dt>Åpningstider</dt><dd><span class="ph">[Man–fre 07:00–15:30]</span></dd></div>
+      </dl>
+    </div>
+    <form class="card" id="contactForm" data-reveal novalidate>
+      <div class="field">
+        <label for="f-navn">Navn</label>
+        <input id="f-navn" name="navn" type="text" autocomplete="name" required>
+      </div>
+      <div class="field">
+        <label for="f-tlf">Telefon</label>
+        <input id="f-tlf" name="telefon" type="tel" autocomplete="tel" required>
+      </div>
+      <div class="field">
+        <label for="f-epost">E-post (valgfritt)</label>
+        <input id="f-epost" name="epost" type="email" autocomplete="email">
+      </div>
+      <div class="field">
+        <label for="f-msg">Hva gjelder det?</label>
+        <textarea id="f-msg" name="melding" required></textarea>
+      </div>
+      <label class="consent" for="f-samtykke">
+        <input id="f-samtykke" name="samtykke" type="checkbox" required>
+        <span>Jeg har lest <button class="linkbtn" type="button" data-open="dlgPrivacy">personvernerklæringen</button> og godtar at opplysningene brukes til å svare på henvendelsen.</span>
+      </label>
+      <button class="btn btn-main" type="submit">Send henvendelse</button>
+      <div class="form-status" id="formStatus" role="status" hidden></div>
+    </form>
+  </div>
+</section>
+</main>
+
+<footer class="foot">
+  <div class="wrap">
+    <span>© 2026 Eksempel Rør AS · org.nr. <span class="ph" style="color:var(--fg)">[000 000 000]</span></span>
+    <div class="foot-links">
+      <button class="linkbtn" type="button" data-open="dlgPrivacy">Personvernerklæring</button>
+      <button class="linkbtn" type="button" data-open="dlgCookies">Informasjonskapsler</button>
+      <button class="linkbtn" type="button" id="reopenCookies">Cookie-valg</button>
+    </div>
+  </div>
+</footer>
+
+<div class="cookie" id="cookieBar" role="region" aria-label="Informasjonskapsler" hidden>
+  <div class="wrap">
+    <p>Denne siden bruker bare det som er nødvendig for at den skal fungere, blant annet å huske dette valget. Statistikk er av som standard. <button class="linkbtn" type="button" data-open="dlgCookies">Les mer</button></p>
+    <div class="cookie-actions">
+      <label for="c-stat"><input id="c-stat" type="checkbox"> Tillat statistikk</label>
+      <button class="btn btn-main" type="button" id="cookieNecessary">Bare nødvendige</button>
+      <button class="btn btn-line" type="button" id="cookieSelected">Lagre valg</button>
+    </div>
+  </div>
+</div>
+
+<dialog id="dlgPrivacy" aria-labelledby="privTitle">
+  <div class="dlg-head">
+    <h2 id="privTitle">Personvernerklæring</h2>
+    <button class="btn btn-line" type="button" data-close>Lukk</button>
+  </div>
+  <div class="dlg-body">
+    <p class="dlg-warn">Dette er en mal. Den må tilpasses og gjennomgås av den som er ansvarlig for nettsiden før den tas i bruk, og er ikke juridisk rådgivning.</p>
+    <h3>Behandlingsansvarlig</h3>
+    <p><span class="ph">[Firmanavn AS]</span>, org.nr. <span class="ph">[000 000 000]</span>, <span class="ph">[adresse]</span>, e-post <span class="ph">[e-post]</span>.</p>
+    <h3>Hvilke opplysninger vi behandler</h3>
+    <p>Når du sender en henvendelse, behandler vi navn, telefonnummer, eventuell e-postadresse og meldingen din. Vi samler ikke inn andre opplysninger via nettsiden.</p>
+    <h3>Formål og rettslig grunnlag</h3>
+    <p>Vi bruker opplysningene til å svare på henvendelsen og gi deg tilbud. Grunnlaget er at behandlingen er nødvendig for å gjøre tiltak på din forespørsel før en avtale inngås, og vår berettigede interesse i å svare på henvendelser (personvernforordningen artikkel 6 nr. 1 bokstav b og f).</p>
+    <h3>Hvor lenge vi lagrer opplysningene</h3>
+    <p>Henvendelser som ikke fører til et kundeforhold slettes etter <span class="ph">[12]</span> måneder. Opplysninger i et kundeforhold lagres så lenge det er nødvendig for oppdraget, og så lenge regnskapsloven og bokføringsloven krever det.</p>
+    <h3>Hvem som får opplysningene</h3>
+    <p>Vi selger ikke personopplysninger. Leverandører som drifter nettsiden og e-posten (<span class="ph">[navn på leverandører]</span>) behandler opplysninger på våre vegne etter databehandleravtale.</p>
+    <h3>Dine rettigheter</h3>
+    <ul>
+      <li>Innsyn i opplysningene vi har om deg</li>
+      <li>Retting av feil</li>
+      <li>Sletting</li>
+      <li>Begrensning av behandlingen</li>
+      <li>Å få opplysningene utlevert i et vanlig format</li>
+      <li>Å protestere mot behandlingen</li>
+    </ul>
+    <p>Kontakt oss på <span class="ph">[e-post]</span> hvis du vil bruke rettighetene dine. Du kan også klage til Datatilsynet (datatilsynet.no).</p>
+    <h3>Informasjonskapsler</h3>
+    <p>Se oversikten under «Informasjonskapsler».</p>
+  </div>
+</dialog>
+
+<dialog id="dlgCookies" aria-labelledby="cookTitle">
+  <div class="dlg-head">
+    <h2 id="cookTitle">Informasjonskapsler</h2>
+    <button class="btn btn-line" type="button" data-close>Lukk</button>
+  </div>
+  <div class="dlg-body">
+    <p class="dlg-warn">Malen er satt opp uten sporing. Legger dere til statistikk eller annonser senere, må oversikten oppdateres og samtykke hentes inn før noe lastes.</p>
+    <h3>Nødvendige</h3>
+    <p>Siden lagrer valget ditt om informasjonskapsler i nettleseren din, slik at du ikke blir spurt på nytt. Dette krever ikke samtykke.</p>
+    <h3>Statistikk</h3>
+    <p>Ikke i bruk i denne malen. Valget «Tillat statistikk» er av som standard, og slås bare på av deg.</p>
+    <h3>Endre valget ditt</h3>
+    <p>Bruk «Cookie-valg» nederst på siden når som helst.</p>
+  </div>
+</dialog>
+
+<script>
+(function () {
+  var reduce = window.matchMedia && window.matchMedia('(prefers-reduced-motion: reduce)').matches;
+
+  /* mobile menu */
+  var mb = document.getElementById('menuBtn');
+  var nav = document.getElementById('nav');
+  mb.addEventListener('click', function () {
+    var open = nav.classList.toggle('open');
+    mb.setAttribute('aria-expanded', open ? 'true' : 'false');
+  });
+  nav.addEventListener('click', function (e) {
+    if (e.target.tagName === 'A') {
+      nav.classList.remove('open');
+      mb.setAttribute('aria-expanded', 'false');
+    }
+  });
+
+  /* scroll reveal: only elements below the fold are staged; everything shows after 3s regardless */
+  var items = Array.prototype.slice.call(document.querySelectorAll('[data-reveal]'));
+  if (!reduce && 'IntersectionObserver' in window) {
+    var io = new IntersectionObserver(function (entries) {
+      entries.forEach(function (en) {
+        if (en.isIntersecting) { en.target.classList.add('in'); io.unobserve(en.target); }
+      });
+    }, { threshold: 0.12 });
+    items.forEach(function (el) {
+      if (el.getBoundingClientRect().top > window.innerHeight) {
+        el.classList.add('pre');
+        io.observe(el);
+      }
+    });
+    setTimeout(function () { items.forEach(function (el) { el.classList.add('in'); }); }, 3000);
+  }
+
+  /* dialogs */
+  function openDlg(id) {
+    var d = document.getElementById(id);
+    if (!d) return;
+    if (typeof d.showModal === 'function') { try { d.showModal(); return; } catch (e) {} }
+    d.setAttribute('open', '');
+  }
+  function closeDlg(d) {
+    if (typeof d.close === 'function') { d.close(); } else { d.removeAttribute('open'); }
+  }
+  Array.prototype.forEach.call(document.querySelectorAll('[data-open]'), function (b) {
+    b.addEventListener('click', function () { openDlg(b.getAttribute('data-open')); });
+  });
+  Array.prototype.forEach.call(document.querySelectorAll('dialog'), function (d) {
+    d.addEventListener('click', function (e) { if (e.target === d) closeDlg(d); });
+    var c = d.querySelector('[data-close]');
+    if (c) c.addEventListener('click', function () { closeDlg(d); });
+  });
+
+  /* cookie choice, kept per viewer */
+  var KEY = 'eksempel-ror-cookies';
+  var bar = document.getElementById('cookieBar');
+  var stat = document.getElementById('c-stat');
+  function read() { try { return JSON.parse(localStorage.getItem(KEY)); } catch (e) { return null; } }
+  function save(v) { try { localStorage.setItem(KEY, JSON.stringify(v)); } catch (e) {} }
+  var saved = read();
+  if (!saved) { bar.hidden = false; } else { stat.checked = !!saved.stat; }
+  function choose(withStats) {
+    save({ necessary: true, stat: withStats });
+    bar.hidden = true;
+  }
+  document.getElementById('cookieNecessary').addEventListener('click', function () { stat.checked = false; choose(false); });
+  document.getElementById('cookieSelected').addEventListener('click', function () { choose(stat.checked); });
+  document.getElementById('reopenCookies').addEventListener('click', function () { bar.hidden = false; });
+
+  /* contact form: the template sends nothing and stores nothing */
+  var form = document.getElementById('contactForm');
+  var status = document.getElementById('formStatus');
+  form.addEventListener('submit', function (e) {
+    e.preventDefault();
+    if (!form.checkValidity()) {
+      form.reportValidity();
+      return;
+    }
+    status.textContent = 'Dette er en mal, så skjemaet sender og lagrer ingenting. I en ekte løsning går henvendelsen til firmaets e-post.';
+    status.hidden = false;
+    form.reset();
+  });
+})();
+</script>
+</body>
+</html>
