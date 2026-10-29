@@ -1,0 +1,73 @@
+<!doctype html>
+<html lang="nb">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>Designforslag for rørleggerside</title>
+<link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Bricolage+Grotesque:opsz,wght@12..96,600..800&family=Hanken+Grotesk:wght@400;500;600&display=swap">
+<style>
+:root {
+  color-scheme: light;
+  --bg: #F2F6F7; --surface: #FFFFFF; --fg: #0D2230; --muted: #476170; --line: #C8D6DC; --link: #0A5A70;
+  --display: "Bricolage Grotesque", "Trebuchet MS", sans-serif;
+  --body: "Hanken Grotesk", "Segoe UI", system-ui, sans-serif;
+}
+@media (prefers-color-scheme: dark) {
+  :root { color-scheme: dark; --bg: #09171E; --surface: #10252E; --fg: #E7F0F3; --muted: #9DB4BE; --line: #23414E; --link: #4CC3DD; }
+}
+* { box-sizing: border-box; }
+body { margin: 0; background: var(--bg); color: var(--fg); font-family: var(--body); font-size: 1.0625rem; line-height: 1.6;
+  padding: clamp(2rem, 6vw, 4rem) max(16px, env(safe-area-inset-right, 0px)) clamp(2rem, 6vw, 4rem) max(16px, env(safe-area-inset-left, 0px)); }
+main { max-width: 1040px; margin: 0 auto; }
+.tag { display: inline-block; font-size: .78rem; font-weight: 600; letter-spacing: .12em; text-transform: uppercase; color: var(--link); margin-bottom: .75rem; }
+h1 { font-family: var(--display); font-size: clamp(2rem, 5vw, 3.1rem); font-weight: 800; line-height: 1.08; margin: 0; max-width: 18ch; text-wrap: balance; }
+.lede { color: var(--muted); max-width: 58ch; margin: 1rem 0 0; }
+.grid { display: grid; gap: 1.25rem; margin-top: 2.25rem; grid-template-columns: repeat(auto-fit, minmax(min(100%, 290px), 1fr)); }
+.card { background: var(--surface); border: 1px solid var(--line); text-decoration: none; color: inherit; display: flex; flex-direction: column; transition: transform .25s ease, border-color .25s ease; }
+.card:hover { transform: translateY(-4px); border-color: var(--link); }
+.swatch { display: flex; height: 92px; }
+.swatch span { flex: 1; }
+.body { padding: 1.2rem 1.3rem 1.4rem; display: flex; flex-direction: column; gap: .35rem; }
+.body h2 { font-family: var(--display); font-size: 1.3rem; margin: 0; }
+.body p { color: var(--muted); font-size: .98rem; margin: 0; }
+.open { margin-top: .6rem; font-weight: 600; color: var(--link); }
+.note { margin-top: 2.25rem; font-size: .92rem; color: var(--muted); max-width: 70ch; }
+:focus-visible { outline: 3px solid var(--link); outline-offset: 2px; }
+@media (prefers-reduced-motion: reduce) { .card { transition: none; } .card:hover { transform: none; } }
+</style>
+</head>
+<body>
+<main>
+  <span class="tag">Konsept</span>
+  <h1>Tre designforslag for en rørleggerside</h1>
+  <p class="lede">Alle tre har samme innhold: tjenester, team, prosjekter, personvern og cookie-valg. Forskjellen er farger, skrift, former og bevegelse. Åpne dem og si hvilken som passer best, og hva du savner.</p>
+  <div class="grid">
+    <a class="card" href="variant-a.html">
+      <div class="swatch" aria-hidden="true"><span style="background:#0A5A70"></span><span style="background:#2AA9C4"></span><span style="background:#F2A516"></span><span style="background:#F2F6F7"></span></div>
+      <div class="body">
+        <h2>Variant A</h2>
+        <p>Rolig og tydelig. Dypblå med gult. Vann som renner gjennom rørene og en dråpe som faller.</p>
+        <span class="open">Åpne variant A →</span>
+      </div>
+    </a>
+    <a class="card" href="variant-b.html">
+      <div class="swatch" aria-hidden="true"><span style="background:#1D3557"></span><span style="background:#4F86B8"></span><span style="background:#D0431B"></span><span style="background:#F3F5F7"></span></div>
+      <div class="body">
+        <h2>Variant B</h2>
+        <p>Kraftig og industriell. Marineblå med oransje, store overskrifter og skarpe kanter. Rørene tegnes opp når siden åpnes.</p>
+        <span class="open">Åpne variant B →</span>
+      </div>
+    </a>
+    <a class="card" href="variant-c.html">
+      <div class="swatch" aria-hidden="true"><span style="background:#1F4FD8"></span><span style="background:#3AA0F0"></span><span style="background:#FFC933"></span><span style="background:#EAF4FF"></span></div>
+      <div class="body">
+        <h2>Variant C</h2>
+        <p>Lys og vennlig. Blå med gult, runde former, luftbobler og knapper som hopper litt.</p>
+        <span class="open">Åpne variant C →</span>
+      </div>
+    </a>
+  </div>
+  <p class="note">Disse sidene er maler. «Eksempel Rør AS» finnes ikke, og navn, personer, bilder og tekster er plassholdere. Hvis operativsystemet er satt til å redusere bevegelse, vises sidene uten animasjoner.</p>
+</main>
+</body>
+</html>
